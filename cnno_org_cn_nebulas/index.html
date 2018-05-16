@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,37 +18,23 @@
     <script src="http://static.anman.org/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="http://static.anman.org/static/bootstrap/js/bootbox.min.js"></script>
     <script src="http://static.anman.org/static/bootstrap/js/nebulas.js"></script>
+    <script src="http://static.anman.org/static/bootstrap/js/nebPay.js"></script>
     <script src="http://static.anman.org/static/bootstrap/js/moment-with-locales.min.js"></script>
     <script src="http://static.anman.org/static/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
     <style type="text/css">
-        .wallet {
-            margin-top: 1rem;
-            display: none;
+
+
+        .noExtension {
+            margin: auto;
+            font-size: 23px;
         }
 
-        .send {
-            margin-top: 1rem;
-            display: none;
-        }
         .order {
             margin-top: 1rem;
             display: none;
         }
 
-        .err {
-            border-color: red;
-        }
 
-        .openfile {
-            text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-            height: 50px;
-            line-height: 50px;
-            border: 1px solid red;
-            display: block;
-            text-align: center
-        }
     </style>
 </head>
 <body>
@@ -66,11 +53,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="http://www.cnno.org.cn/"><b>核点点</b></a>
+            <a class="navbar-brand" href="http://www.cnno.org.cn/"><b>城市与核电厂辐射监测数据交易平台</b></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="http://www.cnno.org.cn/index/rdata"><b>辐射数据</b></a></li>
+                <li><a href="http://www.cnno.org.cn/index/index"><b>辐射数据</b></a></li>
             </ul>
             <div class="nav navbar-right">
                 <form class="navbar-form navbar-left" action="http://www.cnno.org.cn/index/search/" onsubmit="return asearch()">
@@ -97,13 +84,23 @@
         return false;
     }
 </script>
-
-<section id="data7" style="margin-top:1px;padding-bottom: 0px;background-color:rgba(76, 174, 76, 0.84); color:#fff;min-height: 400px;">
+<section id="noExtension" style="margin-top:1px;padding-bottom: 0px;background-color:red; color:#fff;display: none;">
     <div class="container">
         <div class="row">
+            <div class="noExtension col-md-12" id="noExtension">
+                注意: 请安装谷歌浏览器扩展<a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="data7"
+         style="margin-top:1px;padding-bottom: 0px;background-color:rgba(76, 174, 76, 0.84); color:#fff;min-height: 400px;">
+    <div class="container">
+        <div class="row">
+
             <div class="col-sm-12" style="text-align: center">
 
-                <div class="col-lg-6"  style="padding-top:50px;padding-bottom:50px;">
+                <div class="col-lg-6" style="padding-top:50px;padding-bottom:50px;">
                     <h4 id="title"></h4>
                     <p class="space10" id="description">
 
@@ -112,102 +109,40 @@
                     <h2 id="price"></h2>
                     </p>
                     <p class="space10">
-                        <input type="button" id="buy" onclick="buy()" class="btn btn-danger" value="购买"
-                               name="buy" id="buy"></input>
+                        <input type="button" id="buy" onclick="buy()" class="btn btn-danger" value="填写订单"
+                               name="buy" id="buy">
                     </p>
                     <p class="space10">
                         <div class="col-md-12 order" id="order">
                             <label for="order_description">购买时请注意填写联系方式等信息，便于客服与您取得联系</label>
                             <textarea class="form-control" id="order_description" cols="5"></textarea>
                     <p class="small">少于200字</p>
+                    <input type="button" id="neworder" onclick="neworder()" class="btn btn-danger" value="提交订单"
+                           name="neworder" id="neworder">
                 </div>
                 </p>
                 <p class="space10">数据展示：<a style="color:#ffffff;" href="http://www.cnno.org.cn">全国城市及核电厂辐射数据监测平台</a></p>
             </div>
             <div class="col-lg-6">
 
-                <img style="margin-top:10px;margin-bottom:10px;margin-left:10px;margin-right:10px;" src="http://anmanopen.qiniudn.com/static/img/fushe1.png"/>
+                <img style="margin-top:10px;margin-bottom:10px;margin-left:10px;margin-right:10px;"
+                     src="http://anmanopen.qiniudn.com/static/img/fushe1.png"/>
             </div>
         </div>
     </div>
     </div>
 </section>
+<script>
+    function asearch() {
+        var search = $("#search").val();
+        if (search.length > 0) {
+            location.href = "http://www.cnno.org.cn/index/";
+        }
+        return false;
+    }
+</script>
 
-<section id="commit">
-    <div id="unlock" class="container wallet">
-        <div id="unlockWallet" class="col-md-12">
-            <div class="form-group">
-                <label for="openfile">选择你的钱包文件：</label>
-                <a class="openfile" onclick="openFiledialog()">选择钱包文件...</a>
-                <input type="file" id="openfile" style="display:none;">
-            </div>
-            <div class="form-group" id="password_div" style="display:none;">
-                <label for="password">你的钱包加密了，好！请输入密码。</label>
-                <input type="password" class="form-control" id="password" placeholder="">
-            </div>
-            <button id="unlockbtn" type="submit"
-                    class="btn btn-lg btn-warning btn-block col-xs-12 col-sm-12 col-md-12 text-center"
-                    onclick="unlock()">解锁
-            </button>
-        </div>
-    </div><!-- unlock -->
-    <div id="send" class="container send">
-        <div id="sendNas" class="col-md-12">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="fromaddress">来自地址</label>
-                        <input type="text" class="form-control" id="fromaddress" placeholder="" disabled>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="balance">余额</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="balance" placeholder="">
-                            <div class="input-group-addon">NAS</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="toaddress">目的地址</label>
-                        <input type="text" class="form-control" id="toaddress" placeholder="" disabled>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="amount">要发送的价值 / 金额</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="amount" placeholder="Amount">
-                            <div class="input-group-addon">NAS</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="gas_limit">Gas 限制</label>
-                        <input type="text" class="form-control" id="gas_limit" value="200000" placeholder="">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="gas_price">Gas 价格</label>
-                        <i>( 1 NAS = 1EWei = 10
-                            <sup>18</sup> Wei )</i>
-                        <input type="text" class="form-control" id="gas_price" value="1000000" placeholder="">
-                    </div>
-                </div>
-            </div>
-            <button id="generate" type="submit"
-                    class="btn btn-lg btn-warning btn-block col-xs-12 col-sm-12 col-md-12 text-center"
-                    onclick="commitNebulas()">提交
-            </button>
-            <div class="form-group" style="text-align: center;">
-                <label id="txhash"></label>
-            </div>
 
-        </div>
-    </div><!-- send -->
-</section>
 <div class="fade loading modal" data-backdrop=static>
     <div class=modal-dialog>
         <div class=modal-content>
@@ -222,21 +157,18 @@
 </div>
 
 
-
-
-
-
-
 <!--黄-->
-<section id="data7" style="margin-top:1px;padding-bottom: 0px;background-color:rgba(239, 172, 77, 0.85); color:#fff;min-height: 400px;">
+<section id="data7"
+         style="margin-top:1px;padding-bottom: 0px;background-color:rgba(239, 172, 77, 0.85); color:#fff;min-height: 400px;">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12" >
+            <div class="col-sm-12">
                 <div class="col-lg-6">
 
-                    <img style="margin-top:10px;margin-bottom:10px;margin-left:10px;margin-right:10px;" src="http://anmanopen.qiniudn.com/static/img/fushe1.png"/>
+                    <img style="margin-top:10px;margin-bottom:10px;margin-left:10px;margin-right:10px;"
+                         src="http://anmanopen.qiniudn.com/static/img/fushe1.png"/>
                 </div>
-                <div class="col-lg-6"  style="padding-top:50px;padding-bottom:50px;">
+                <div class="col-lg-6" style="padding-top:50px;padding-bottom:50px;">
                     <h4 style="text-align: center">城市与核电厂辐射监测数据</h4>
                     <p class="space10">
                         数据主要来源于国家辐射环境监测网辐射环境自动监测站自动监测结果，监测点位包括环境质量监测点和核电厂监测点。
@@ -256,8 +188,9 @@
 <footer class="bg-fff ">
     <div class="container-fluid" style="border-top: 1px solid #ddd">
         <div class="row">
-            <div class="col-xs-12 text-center" >
-                <h4 class="footer-title">Copyright © 2017-2050 <a href="http://www.cnno.org.cn/">城市与核电厂辐射监测数据交易平台</a>. <a href="http://www.miibeian.gov.cn/">浙ICP备14037650号</a>
+            <div class="col-xs-12 text-center">
+                <h4 class="footer-title">Copyright © 2017-2050 <a href="http://www.cnno.org.cn/">城市与核电厂辐射监测数据交易平台</a>. <a
+                        href="http://www.miibeian.gov.cn/">浙ICP备14037650号</a>
                 </h4>
                 <p><a href='#'>Go Top</a></p>
             </div>
@@ -270,30 +203,30 @@
 <script>
     "use strict";
     var nebulas = require("nebulas"),
-        Account = nebulas.Account,
         Utils = nebulas.Utils,
-        neb = new nebulas.Neb(),
-        globalParams = {
-            account: null,
-            selectedFile: null,
-            name: null
-        };
+        neb = new nebulas.Neb();
     //Testnet:
-    var ContractAddress = "n1hanfmmw697ZK5RQSjxFcwCWTgJvbgy86o";
-    var chainId = "1001";
-    var initAddress = "n1LRdxLWijiqci8zTF72o84y7npUBrizp8a";
-    neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+    // var ContractAddress = "n1hanfmmw697ZK5RQSjxFcwCWTgJvbgy86o";
+    // var chainId = "1001";
+    // var initAddress = "n1LRdxLWijiqci8zTF72o84y7npUBrizp8a";
+    // neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
 
     //Mainnet:
-    // var ContractAddress ="n1hanfmmw697ZK5RQSjxFcwCWTgJvbgy86o";
-    // var chainId = "1";
-    // var initAddress = "n1Lvduf7mV6NBXwi43ahP3RqRKrnp6jHa8D";
-    // neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"));
+    var ContractAddress = "n1uf2jCXf7qbZj72YirdY66x24mWHuVN7dW";
+    var chainId = "1";
+    var initAddress = "n1Lvduf7mV6NBXwi43ahP3RqRKrnp6jHa8D";
+    neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"));
     var Amount = 0;
     var goodid;
-    $("#toaddress").val(ContractAddress);
-    $("#amount").val(Amount);
     var timer;
+
+    var NebPay = require("nebpay");     //https://github.com/nebulasio/nebPay
+    var nebPay = new NebPay();
+
+
+    if (typeof(webExtensionWallet) === "undefined") {
+        $("#noExtension").show();
+    }
     $(document).ready(function () {
         $("textarea").keyup(function () {
 
@@ -320,22 +253,20 @@
                 .then(function (resp) {
                     let arr = JSON.parse(resp.result);
                     let arra = JSON.parse(arr);
-                    if (arra){
+                    if (arra) {
                         let gooditem = arra[0];
                         console.log(gooditem);
                         let title = gooditem.title;
                         let description = gooditem.description;
                         let price = gooditem.price;
-                        Amount=price;
-                        $("#amount").val(Amount);
-                        goodid = gooditem.saler+gooditem.timestamp;
+                        Amount = price;
+                        goodid = gooditem.saler + gooditem.timestamp;
 
                         $("#title").text(title);
                         $("#description").text(description);
-                        $("#price").text("价格："+price+"NAS");
+                        $("#price").text("价格：" + price + "NAS");
                     }
                     $(".modal.loading").modal("hide");
-
 
 
                     if (resp.execute_err && resp.execute_err !== "") {
@@ -356,236 +287,7 @@
         });
 
     });
-    Date.prototype.Format = function (fmt) { //author: meizz
-        var o = {
-            "M+": this.getMonth() + 1, //月份
-            "d+": this.getDate(), //日
-            "H+": this.getHours(), //小时
-            "m+": this.getMinutes(), //分
-            "s+": this.getSeconds(), //秒
-            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-            "S": this.getMilliseconds() //毫秒
-        };
-        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-        for (var k in o)
-            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-        return fmt;
-    };
-    var buy = function () {
-        $("#unlock").show();
-        $("#send").show();
-        $("#order").show();
-    };
-    var openFiledialog = function () {
-        return $("#openfile").click();
-    }
-    $("#openfile").change(function () {
-        globalParams.selectedFile = $("#openfile")[0].files[0];
-        try {
-            globalParams.name = globalParams.selectedFile.name;
-            $(".openfile").text(globalParams.name);
-            $("#password_div").show();
-            console.log(name);
-        } catch (e) {
-            bootbox.dialog(
-                {
-                    title: 'Error',
-                    message: e, size: 'large'
-                }
-            );
-        }
-    });
-    var unlock = function () {
-        try {
-            if (globalParams.name == null) {
-                bootbox.dialog(
-                    {
-                        title: '提示',
-                        message: "请选择您的钱包文件",
-                        size: 'large',
-                        onEscape: true
-                    }
-                );
-            } else {
-                var password = $("#password").val();
-                var reader = new FileReader();
-                reader.readAsText(globalParams.selectedFile);
-                reader.onload = function () {
-                    try {
-                        var mFileJson = JSON.parse(this.result);
-                        var mAccount = Account.fromAddress(mFileJson.address);
-                        var balance_nas, state;
-                        var fromAddr = mAccount.getAddressString();
-                        $("#fromaddress").val(fromAddr);
-                        $(".modal.loading").modal("show");
-                        try {
-                            mAccount.fromKey(mFileJson, password, true);
-                            globalParams.account = mAccount;
-                            neb.api.gasPrice()
-                                .then(function (resp) {
-                                    console.log(resp);
-                                    $("#gas_price").val(resp.gas_price);
-                                    return neb.api.getAccountState(fromAddr);
-                                })
-                                .then(function (resp) {
-                                    console.log(resp);
-                                    var balance = nebulas.Unit.fromBasic(resp.balance, "nas");
-                                    $("#balance").val(balance);
 
-                                    $(".modal.loading").modal("hide");
-                                })
-                                .catch(function (e) {
-                                    // this catches e thrown by nebulas.js!neb
-
-                                    bootbox.dialog({
-                                        backdrop: true,
-                                        onEscape: true,
-                                        message: e + "星云API接口异常",
-                                        size: "large",
-                                        title: "Error"
-                                    });
-
-                                    $(".modal.loading").modal("hide");
-                                });
-
-                        } catch (e) {
-                            bootbox.dialog({
-                                backdrop: true,
-                                onEscape: true,
-                                message: "keystore 文件错误, 或者密码错误",
-                                size: "large",
-                                title: "Error"
-                            });
-
-                            $(".modal.loading").modal("hide");
-
-                        }
-
-                    } catch (e) {
-                        bootbox.dialog(
-                            {
-                                title: 'Error',
-                                message: e,
-                                size: 'large'
-                            }
-                        );
-                    }
-
-                }
-            }
-        } catch (e) {
-            alert(e);
-        }
-    };
-    var innerCall = function (callback) {
-        var params = {};
-        if (!globalParams.account) {
-            bootbox.dialog(
-                {
-                    title: 'Error',
-                    message: "没有获取到合规账户",
-                    size: 'large'
-                }
-            );
-            return
-        }
-        params.from = globalParams.account.getAddressString();
-
-        // prepare to
-        let toAddr = $("#toaddress").val().trim();
-        if (!Account.isValidAddress(toAddr)) {
-            $("#toaddress").addClass("err");
-            setTimeout(function () {
-                $("#toaddress").removeClass("err");
-            }, 5000);
-            return;
-        }
-        params.to = toAddr;
-
-        // prepare gasLimit
-        let gasLimit = Utils.toBigNumber(0);
-        try {
-            gasLimit = Utils.toBigNumber($("#gas_limit").val());
-        } catch (err) {
-            console.log(err);
-        }
-        if (gasLimit.cmp(Utils.toBigNumber(0)) <= 0) {
-            $("#gas_limit").addClass("err");
-            setTimeout(function () {
-                $("#gas_limit").removeClass("err");
-            }, 5000);
-            return;
-        }
-        params.gasLimit = gasLimit.toNumber();
-
-        // prepare gasPrice
-        let gasPrice = Utils.toBigNumber(0);
-        try {
-            gasPrice = Utils.toBigNumber($("#gas_price").val());
-        } catch (err) {
-            console.log(err);
-        }
-        if (gasPrice.cmp(Utils.toBigNumber(0)) <= 0) {
-            $("#gas_price").addClass("err");
-            setTimeout(function () {
-                $("#gas_price").removeClass("err");
-            }, 5000);
-            return;
-        }
-        params.gasPrice = gasPrice.toNumber();
-
-        // prepare value
-        let value = Utils.toBigNumber(0);
-        try {
-            value = nebulas.Unit.toBasic(Utils.toBigNumber($("#amount").val()), "nas");
-        } catch (err) {
-            console.log(err);
-        }
-        if (value.cmp(Utils.toBigNumber(0)) < 0) {
-            // TODO 添加提示value输入不对
-            bootbox.dialog(
-                {
-                    title: 'Error',
-                    message: "发送金额输入不正确",
-                    size: 'large'
-                }
-            );
-            console.log("invalid value");
-            return;
-        }
-        params.value = value;
-
-        // prepare contract
-
-        let result =[];
-        let order_description = $("#order_description").val();
-        result.push(goodid);
-        result.push(order_description);
-
-        params.contract = {
-            "function": "NewOrder",
-            "args": JSON.stringify(result)
-        };
-
-        // prepare nonce
-        // needs refresh data on every 'test' and 'commit' call, because data update may slow,
-        // you can get different result by hit 'test' multiple times
-        neb.api.getAccountState(params.from).then(function (resp) {
-            var balance = nebulas.Unit.fromBasic(resp.balance, "nas");
-            $("#balance").val(balance);
-            params.nonce = parseInt(resp.nonce) + 1;
-            callback(params);
-        }).catch(function (err) {
-            // console.log("prepare nonce error: " + err);
-            bootbox.dialog({
-                backdrop: true,
-                onEscape: true,
-                message: err.message,
-                size: "large",
-                title: "Error"
-            });
-        });
-    };
     var initCall = function (callback) {
         var params = {};
 
@@ -624,62 +326,25 @@
             });
         });
     };
-    var commitNebulas = function () {
 
-        innerCall(function (params) {
-            $(".modal.loading").modal("show");
-            var gTx = new nebulas.Transaction(parseInt(chainId), globalParams.account, params.to, params.value, params.nonce, params.gasPrice, params.gasLimit, params.contract);
-            console.log(gTx);
-            gTx.signTransaction();
-            neb.api
-                .sendRawTransaction(gTx.toProtoString())
-                .then(function (resp) {
-                    console.log(JSON.stringify(resp));
-                    $(".modal.loading").modal("hide");
-                    let t = 15;
-                    timer = setInterval(function () {
-                        if (t == 0) {
-                            GetFromNebulas(resp.txhash);
-                            t = 15;
-                        }
-                        $("#txhash").text(t);
-                        --t;
-                    }, 1000);
-
-
-                })
-                .catch(function (err) {
-                    console.log(JSON.stringify(err));
-                    $(".modal.loading").modal("hide");
-                });
-
-
-        })
-    };
-    var GetFromNebulas = function (txhash) {
-        neb.api.getTransactionReceipt(txhash)
-            .then(doneGetTransactionReceipt)
-            .catch(function (o) {
-                $(".modal.loading").modal("hide");
-
-                bootbox.dialog({
-                    backdrop: true,
-                    message: o.message,
-                    onEscape: true,
-                    size: "large",
-                    title: "Error"
-                });
-            });
-
-    };
-    var doneGetTransactionReceipt = function (o) {
-        $(".modal.loading").modal("hide");
-        if (o.status == 1) {
-            clearInterval(timer);
-        }
-        $("#txhash").text(o.status == 1 ? "提交操作成功" : (o.status == 0 ? "提交数据失败" : "数据正在提交"));
+    var buy = function () {
+        $("#order").show();
     };
 
+    var neworder = function () {
+        let result = [];
+        let order_description = $("#order_description").val();
+        result.push(goodid);
+        result.push(order_description);
+        let callArgs = JSON.stringify(result);
+        let callFunction = "NewOrder";
+        nebPay.call(ContractAddress, Amount, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
+            listener: cbPush        //设置listener, 处理交易返回信息
+        });
+    };
+    var cbPush = function (resp) {
+        console.log("response of push: " + JSON.stringify(resp))
+    };
 
 </script>
 </body>
